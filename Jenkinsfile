@@ -1,18 +1,18 @@
 node('php'){
-    stage('Clean'){
+    stage('Clean...'){
         deleteDir()
         sh 'ls -la'
     }
     
-    stage('Fetch') {
+    stage('Fetch...') {
         checkout scm
     }
     
-    stage('Build'){
+    stage('Build...'){
         sh 'composer install --no-scripts --prefer-dist --no-dev --ignore-platform-reqs'
     }
     
-    stage('config') {
+    stage('Config...') {
         parallel(
             'config cache': {
                 echo 'Tarefa paralela 01' 
@@ -22,11 +22,11 @@ node('php'){
             }
         )
     }
-    stage('Docker Build') {
-        sh 'docker build -t jeffersonsouza/laravel:$BUILD_NUMBER .'
+    stage('Docker Build...') {
+        sh 'docker build -t rsertori/laravel:$BUILD_NUMBER .'
     }
     
-    stage('Docker Ship') {
-        sh 'docker push jeffersonsouza/laravel:$BUILD_NUMBER'
+    stage('Docker Ship...') {
+        sh 'docker push rsertori/laravel:$BUILD_NUMBER'
     }
 }
