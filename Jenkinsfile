@@ -1,23 +1,23 @@
 node('php'){
-    stage('Clean'){
+    stage('Clean...'){
         deleteDir()
         sh 'ls -la'
     }
     
-    stage('Fetch') {
+    stage('Fetch...') {
         checkout scm
     }
     
-    stage('Build App'){
+    stage('Build App...'){
         sh 'composer install --no-scripts --prefer-dist --no-dev --ignore-platform-reqs'
     }
     
-    stage('Docker Build') {
+    stage('Docker Build...') {
         sh 'docker build -t jeffersonsouza/laravel:$BUILD_NUMBER .'
     }
     
-    stage('Docker Ship') {
-        sh 'docker push jeffersonsouza/laravel:$BUILD_NUMBER'
-        sh 'docker rmi -f jeffersonsouza/laravel:$BUILD_NUMBER'
+    stage('Docker Ship...') {
+        sh 'docker push rsertori/laravel:$BUILD_NUMBER'
+        sh 'docker rmi -f rsertori/laravel:$BUILD_NUMBER'
     }
 }
